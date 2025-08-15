@@ -1,3 +1,4 @@
+import rateLimit from 'express-rate-limit';
 import express from "express"
 import http from "http"
 import morgan from "morgan";
@@ -21,6 +22,9 @@ import meRoutes from "./routes/me/index.js";
 import tokensRouter from "./routes/tokens/index.js";
 import settlementsRouter from "./routes/settlements/index.js"
 
+
+
+
 config();
 
 const app = express();
@@ -30,7 +34,15 @@ const io = new Server(server, {
         origin: [Config.ORIGIN]
     }
 });
+const limiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 20,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
+    ipv6Subnet: 56 
+});
 
+app.use(limiter)
 app.use((req, res, next) => {
     const contentType = req.headers["content-type"] || "";
     if (contentType.startsWith("multipart/form-data")) {

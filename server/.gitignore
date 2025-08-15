@@ -29,7 +29,7 @@ dist/
 build/
 coverage/
 
-# IDE specific files
+# IDE specific filesyarn
 .vscode/
 .idea/
 *.sublime-project
