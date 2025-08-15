@@ -36,10 +36,9 @@ const io = new Server(server, {
 });
 const limiter = rateLimit({
     windowMs: 60 * 1000,
-    limit: 20,
+    limit: 100,
     standardHeaders: 'draft-8',
-    legacyHeaders: false,
-    ipv6Subnet: 56 
+    legacyHeaders: false
 });
 
 app.use(limiter)
